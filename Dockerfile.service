@@ -1,0 +1,9 @@
+FROM golang:alpine AS build-env
+RUN apk --no-cache add git
+ADD . /src
+RUN cd /src && go build -o example cmd/example/main.go
+
+FROM alpine
+WORKDIR /app
+COPY --from=build-env /src/example /app/
+ENTRYPOINT ./example

@@ -1,0 +1,21 @@
+
+version: '3.7'
+services:
+  envoy:
+    build:
+      context: ../..
+      dockerfile: Dockerfile.front
+    command: /usr/local/bin/envoy -c /etc/envoy.yaml --service-cluster envoy-proxy
+    ports:
+    - "10000:10000"
+    - "9901:9901"
+    volumes:
+    - ./envoy.yaml:/etc/envoy.yaml
+  service:
+    build:
+      context: ../..
+      dockerfile: Dockerfile.service
+    depends_on:
+      - envoy
+    expose:
+    - "8000"

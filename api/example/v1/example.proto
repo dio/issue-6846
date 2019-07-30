@@ -1,0 +1,13 @@
+syntax = "proto3";
+
+package grpctranscoding.api.example.v1;
+option go_package = "github.com/dio/grpctranscoding/api/example/v1";
+
+import "google/api/annotations.proto";
+import "google/protobuf/empty.proto";
+
+service Example {
+  rpc Sample(google.protobuf.Empty) returns (google.protobuf.Empty) {
+    option (google.api.http).get = "/sample";
+  }
+}
